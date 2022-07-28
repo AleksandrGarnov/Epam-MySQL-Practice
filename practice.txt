@@ -1,0 +1,28 @@
+-- write SQL queries to show all information about all --
+-- a) authors--
+-- b) genres--    
+SELECT * FROM `authors`; 
+SELECT * FROM `genres`;
+
+-- Show ids without duplication of those subscribers who visited the library at least once--
+SELECT DISTINCT `sb_subscriber` FROM `subscriptions`;
+
+-- Show the list of all subscribers along with the information of their names count --
+ SELECT `s_name`, COUNT(*) AS `people_count` FROM `subscribers`
+GROUP BY `s_name`;
+
+-- write SQL queries to show --
+-- a) all ids(without duplication) of all books even taken by subs--
+-- b) all books along with count of times each book was taken by a subs--    
+
+SELECT DISTINCT `sb_book`
+FROM `subscriptions`;
+
+SELECT `sb_book`,
+COUNT(*) AS 'count'  
+FROM `subscriptions`
+group by `sb_book`
+
+-- Write an SQL query to show how many subs are there in the library--
+SELECT count(*) AS `total_subs`
+from `subscribers`
