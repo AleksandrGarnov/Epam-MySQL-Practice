@@ -26,3 +26,34 @@ group by `sb_book`
 -- Write an SQL query to show how many subs are there in the library--
 SELECT count(*) AS `total_subs`
 from `subscribers`
+
+-- Write an SQL queries to show --
+-- a) how many times subs have taken books--
+-- b)how many subs have taken books   
+SELECT count(`sb_is_active`) AS `taken_books`
+from `subscriptions`;
+
+SELECT count(`sb_subscriber`) AS `active_subs`
+FROM `subscriptions`
+WHERE `sb_is_active` = 'Y';
+
+-- Write an SQL query to show the first and the last dates when a book was taken by a subscriber.-- 
+SELECT MIN(`sb_start`) AS `first_date`,
+	MAX(`sb_start`) AS `last_date`
+FROM `subscriptions`
+-- Write an SQL query to show the all authors ordered by their names descending (i.e., "Z -> A").--  
+SELECT `a_name`
+FROM `authors`
+ORDER BY `a_name` DESC
+
+-- Write SQL queries to show-- 
+-- a) books that have the number of their copies less than average number of all books copies;-- 
+-- b) ids and dates of all subscriptions occurred during the first year of the library work (i.e., up to Dec 31st of the year when the first subscription had happened).--  
+SELECT `b_name`, `b_quantity`
+FROM `books`
+WHERE `b_quantity` < (SELECT AVG(`b_quantity`) FROM `books`);
+
+SELECT  `sb_id`,`sb_start`
+FROM `subscriptions`
+WHERE `sb_start`>= '2011-01-01' 
+AND `sb_start` < '2011-12-31'
