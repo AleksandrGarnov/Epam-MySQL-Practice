@@ -132,3 +132,30 @@ SELECT `b_id`,`b_name`
  SELECT `b_id`,`b_name`
  FROM `books`
  WHERE `b_id` NOT IN (SELECT DISTINCT `sb_book` FROM `subscriptions`)
+
+
+-- Write an SQL query to show all such books that not a single copy of which is now taken by any subscriber.--  
+ SELECT `b_name`,`b_id` FROM `books`
+ LEFT JOIN `subscriptions` ON `b_id` = `sb_book`
+ WHERE `sb_book` IS NULL
+
+
+-- Write SQL queries to show:-- 
+-- a) all books written by Alexander Pushkin and/or Isaac Asimov (either individually or as co-authors);-- 
+-- b) all books written by Dale Carnegie AND Bjarne Stroustrup (as co-authors). -- 
+
+SELECT `b_id`,`b_name`
+FROM `books`
+WHERE `b_id` IN (SELECT DISTINCT `b_id` 
+FROM `m2m_books_authors` 
+WHERE `a_id` IN (SELECT `a_id` FROM `authors` 
+WHERE `a_name` IN ( 'Alexander Pushkin','Isaac Asimov')))
+ORDER BY `b_name` ASC
+
+SELECT `b_id`,`b_name`
+FROM `books`
+WHERE `b_id` IN (SELECT DISTINCT `b_id` 
+FROM `m2m_books_authors` 
+WHERE `a_id` IN (SELECT `a_id` FROM `authors` 
+WHERE `a_name` IN ( 'Dale Carnegie' AND 'Bjarne Stroustrup')))
+ORDER BY `b_name` ASC
